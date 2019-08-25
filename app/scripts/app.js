@@ -29,13 +29,14 @@ Instructions:
    * @return {Promise}    - A Promise that resolves when the XHR succeeds and fails otherwise.
    */
   function get(url) {
+    return fetch(url);
     /*
     Use the Fetch API to GET a URL.
     Return the fetch.
 
     Your code goes here!
      */
-  }
+  };
 
   /**
    * Performs an XHR for a JSON and returns a parsed JSON response.
@@ -43,12 +44,15 @@ Instructions:
    * @return {Promise}    - A promise that passes the parsed JSON response.
    */
   function getJSON(url) {
+    return get(url).then(function(response) {
+      return response.json();
+    });
     /*
     Return a Promise that gets a URL and parses the JSON response. Use your get method!
 
     Your code goes here!
      */
-  }
+  };
 
   window.addEventListener('WebComponentsReady', function() {
     home = document.querySelector('section[data-route="home"]');
@@ -58,6 +62,14 @@ Instructions:
 
     Your code goes here too!
      */
-    // getJSON('../data/earth-like-results.json')
+    getJSON('../data/earth-like-results.json')
+    .then(function(response) {
+      addSearchHeader(response.query);
+      console.log(response);
+    })
+    .catch(function(error) {
+      addSearchHeader('unknown');
+      console.log(error);
+    })
   });
 })(document);
