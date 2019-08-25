@@ -70,7 +70,7 @@ Instructions:
       console.log(planetQty);
       response.results.forEach(function(url) {
         planetsArr[n] = function() {
-          getJSON(url).then(createPlanetThumb);
+          getJSON(url).then(createPlanetThumb).catch(function(e){console.log(e);});
         }
         n +=1;
         //getJSON(url).then(createPlanetThumb);
