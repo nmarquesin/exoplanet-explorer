@@ -64,9 +64,20 @@ Instructions:
      */
     getJSON('../data/earth-like-results.json')
     .then(function(response) {
+      let planetQty = response.results.length;
+      let planetsArr = [];
+      let n = 0;
+      console.log(planetQty);
       response.results.forEach(function(url) {
-        getJSON(url).then(createPlanetThumb);
+        planetsArr[n] = function() {
+          getJSON(url).then(createPlanetThumb);
+        }
+        n +=1;
+        //getJSON(url).then(createPlanetThumb);
       });
+      for (let i = 0; i < planetQty; i++) {
+        planetsArr[i]();
+      };
     });
   });
 })(document);
